@@ -29,12 +29,12 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public void addBoard(String title, String content, Integer userId) {
-        Board board = new Board();
-        board.setTitle(title);
-        board.setContent(content);
-        board.setUserId(userId);
-        board.setRegDate(LocalDateTime.now());
+    public void addBoard(Board board) {
+//        Board board = new Board();
+//        board.setTitle(title);
+//        board.setContent(content);
+//        board.setUserId(userId);
+//        board.setRegDate(LocalDateTime.now());
         SqlParameterSource params = new BeanPropertySqlParameterSource(board);
         insertBoard.execute(params);
     }
@@ -65,19 +65,20 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public void updateBoard(int boardId, String title, String content) {
-        String sql = "UPDATE board SET title=:title, content=:content";
-        Board board = new Board();
-        board.setBoardId(boardId);
-        board.setTitle(title);
-        board.setContent(content);
+//    public void updateBoard(int boardId, String title, String content) {
+    public void updateBoard(Board board) {
+        String sql = "UPDATE board SET title=:title, content=:content WHERE board_id=:boardId";
+//        Board board = new Board();
+//        board.setBoardId(boardId);
+//        board.setTitle(title);
+//        board.setContent(content);
 
         SqlParameterSource params = new BeanPropertySqlParameterSource(board);
         jdbcTemplate.update(sql, params);
     }
 
     @Override
-    public void updateViewCount(int boardId) {
+    public void increaseViewCount(int boardId) {
         String sql = "UPDATE board SET view_cnt = view_cnt + 1 WHERE board_id = :boardId";
         jdbcTemplate.update(sql, Map.of("boardId", boardId));
     }

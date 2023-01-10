@@ -19,7 +19,11 @@ class BoardDaoImplTest {
 
     @Test
     void addBoardTest() {
-        boardDao.addBoard("title1","content1",5);
+        Board board = new Board();
+        board.setTitle("title1");
+        board.setContent("content1");
+        board.setUserId(5);
+        boardDao.addBoard(board);
     }
 
     @Test
@@ -45,12 +49,16 @@ class BoardDaoImplTest {
 
     @Test
     void updateBoardTest() {
-        boardDao.updateBoard(3, "testing", "Attention please");
+//        boardDao.updateBoard(3, "testing", "Attention please");
+        Board board = boardDao.getBoard(4);
+        board.setTitle("hi22");
+        board.setContent("22there");
+        boardDao.updateBoard(board);
     }
 
     @Test
-    void updateViewCountTest() {
-        boardDao.updateViewCount(39);
+    void increaseViewCountTest() {
+        boardDao.increaseViewCount(39);
         Board board = boardDao.getBoard(39);
         assertThat(board.getViewCnt()).isEqualTo(1);
     }
