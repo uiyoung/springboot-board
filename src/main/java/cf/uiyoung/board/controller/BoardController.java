@@ -5,12 +5,10 @@ import cf.uiyoung.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -18,28 +16,34 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
+
     @GetMapping("/")
-    public String board(@RequestParam(required = true, defaultValue = "1") int page, HttpSession session, Model model){
+    public String board(@RequestParam(required = true, defaultValue = "1") int page, HttpSession session, Model model) {
         List<Board> boards = boardService.getPostsByPage(page);
         model.addAttribute("boards", boards);
 
-        return "board";
+        return "list";
     }
 
-    @GetMapping("/detail")
-    public String detail(@RequestParam int boardId, Model model){
-        Board board = boardService.getPost(boardId);
-        model.addAttribute("board",board);
+    @GetMapping("/{id}")
+    public String detail(@PathVariable int id, Model model) {
+        Board board = boardService.getPost(id);
+        model.addAttribute("board", board);
         return "detail";
     }
 
-    @GetMapping("/write")
-    public String writeForm(){
+    @GetMapping("/save")
+    public String writeForm() {
         return "write";
     }
 
-    @PostMapping("/write")
-    public String write(){
-        return null;
+    @PostMapping("/save")
+    public String write(@ModelAttribute Board board) {
+        System.out.println("board = " + board);
+        // TODO : setUserId with login info
+        board.setUserId(5);
+        board.setRegDate(LocalDateTime.now());
+        boardService.save(board);
+        return "redirect:/board/";
     }
 }

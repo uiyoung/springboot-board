@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>id</td>
+        <td>title</td>
+        <td>writer</td>
+        <td>regdate</td>
+    </tr>
+    <tr th:each="board : ${boards}">
+        <td th:text="${board.boardId}"></td>
+        <td><a th:href="@{|/board/${board.boardId}|}" th:text="${board.title}"></a></td>
+        <td th:text="${board.userId}"></td>
+        <td th:text="*{#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+    </tr>
+</table>
+<a href="save">write</a>
+</body>
+</html>

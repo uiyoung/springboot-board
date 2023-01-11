@@ -9,7 +9,26 @@
     <span th:text="${board.title}"></span>
     <span th:text="${board.content}"></span>
     <span th:text="${board.userId}"></span>
-    <span th:text="${board.regDate}"></span>
+    <span th:text="*{#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
 </div>
+<button onClick="requestList()">목록</button>
+<button onClick="editPost()">수정</button>
+<button onClick="deletePost()">삭제</button>
+
+<a href="/board/">back</a>
+
+<script th:inline="javascript">
+    function requestList(){
+        location.href="/board/";
+    }
+
+    function editPost(){
+        console.log("edit");
+    }
+
+    function deletePost(){
+        console.log("delete");
+    }
+</script>
 </body>
 </html>
