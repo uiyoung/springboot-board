@@ -30,11 +30,8 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public void addBoard(Board board) {
-//        Board board = new Board();
-//        board.setTitle(title);
-//        board.setContent(content);
-//        board.setUserId(userId);
-//        board.setRegDate(LocalDateTime.now());
+        board.setRegDate(LocalDateTime.now());
+        board.setViewCnt(0);
         SqlParameterSource params = new BeanPropertySqlParameterSource(board);
         insertBoard.execute(params);
     }

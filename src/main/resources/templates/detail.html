@@ -24,6 +24,8 @@
 
     function editPost(){
         console.log("edit");
+        const id = [[${board.boardId}]];
+        location.href=`/board/update/${id}`;
     }
 
     function deletePost(){

@@ -11,12 +11,14 @@
         <td>title</td>
         <td>writer</td>
         <td>regdate</td>
+        <td>hits</td>
     </tr>
     <tr th:each="board : ${boards}">
         <td th:text="${board.boardId}"></td>
         <td><a th:href="@{|/board/${board.boardId}|}" th:text="${board.title}"></a></td>
         <td th:text="${board.userId}"></td>
         <td th:text="*{#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${board.viewCnt}"></td>
     </tr>
 </table>
 <a href="save">write</a>

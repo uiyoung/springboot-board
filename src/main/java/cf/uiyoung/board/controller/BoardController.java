@@ -46,4 +46,19 @@ public class BoardController {
         boardService.save(board);
         return "redirect:/board/";
     }
+
+    @GetMapping("/update/{id}")
+    public String editForm(@PathVariable int id, Model model){
+        Board board = boardService.getPost(id);
+        model.addAttribute("board", board);
+        return "edit";
+    }
+
+    @PostMapping("/update")
+    public String edit(@ModelAttribute Board board){
+        System.out.println("hi there");
+        boardService.editPost(board);
+        return "redirect:/board/" + board.getBoardId();
+    }
+
 }

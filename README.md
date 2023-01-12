@@ -29,7 +29,7 @@
 3. UPDATE
    `/board/update/{id}`
 4. DELETE
-    `/board/delete/{id}`
+   `/board/delete/{id}`
 
 
 ### TODO
