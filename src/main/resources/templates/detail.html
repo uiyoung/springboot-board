@@ -6,30 +6,35 @@
 </head>
 <body>
 <div>
-    <span th:text="${board.title}"></span>
-    <span th:text="${board.content}"></span>
-    <span th:text="${board.userId}"></span>
-    <span th:text="*{#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+    제목 : <span th:text="${board.title}"></span>
+    <br/>
+    작성자 : <span th:text="${board.userId}"></span>
+    <br/>
+    작성일 : <span th:text="*{#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+    <br/>
+    내용 : <span th:text="${board.content}"></span>
 </div>
+
 <button onClick="requestList()">목록</button>
 <button onClick="editPost()">수정</button>
 <button onClick="deletePost()">삭제</button>
 
-<a href="/board/">back</a>
-
 <script th:inline="javascript">
     function requestList(){
-        location.href="/board/";
+        const returnPage = [[${page}]];
+        location.href=`/board?page=${returnPage}`;
     }
 
     function editPost(){
-        console.log("edit");
         const id = [[${board.boardId}]];
         location.href=`/board/update/${id}`;
     }
 
     function deletePost(){
-        console.log("delete");
+        const id = [[${board.boardId}]];
+        fetch('/board/delete/' + id, {
+            method: 'DELETE',
+        }).then(res => res.redirected ? location.href = res.url : '');
     }
 </script>
 </body>

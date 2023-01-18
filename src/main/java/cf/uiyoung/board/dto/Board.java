@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @ToString
 public class Board {
-    private Integer boardId;
+    private Long boardId;
     private String title;
     private String content;
-    private Integer userId;
+    private Long userId;
     private LocalDateTime regDate;
     private LocalDateTime upDate;
-    private Integer viewCnt;
+    private Long viewCnt;
 }

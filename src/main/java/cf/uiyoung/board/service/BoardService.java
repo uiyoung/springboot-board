@@ -6,8 +6,9 @@ import java.util.List;
 
 public interface BoardService {
     void save(Board board);
-    Board getPost(int boardId);
+    Integer getTotalCount();
+    Board getPost(Long boardId);
     List<Board> getPostsByPage(int page);
     void editPost(Board board);
-    void deletePost(int boardId);
+    void deletePost(Long boardId);
 }

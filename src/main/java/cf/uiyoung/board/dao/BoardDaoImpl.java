@@ -31,7 +31,7 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public void addBoard(Board board) {
         board.setRegDate(LocalDateTime.now());
-        board.setViewCnt(0);
+        board.setViewCnt(0L);
         SqlParameterSource params = new BeanPropertySqlParameterSource(board);
         insertBoard.execute(params);
     }
@@ -45,7 +45,7 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public Board getBoard(int boardId) {
+    public Board getBoard(Long boardId) {
         String sql = "SELECT board_id, title, content, user_id, reg_date, up_date, view_cnt from board WHERE board_id=:boardId";
         Board board = jdbcTemplate.queryForObject(sql, Map.of("boardId", boardId), rowMapper);
 
@@ -53,7 +53,7 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     public List<Board> getBoards(int page){
-        // todo : 한페이지당 게시글 10을 상수로 만들기
+        // todo : 페이지당 보이는 게시글 수 10을 변수로 만들기
         int offset = (page-1) * 10;
         String sql = "SELECT board_id, title, content, user_id, reg_date, view_cnt from board order by board_id desc LIMIT :offset, 10";
         List<Board> boards = jdbcTemplate.query(sql, Map.of("offset", offset), rowMapper);
@@ -62,26 +62,20 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-//    public void updateBoard(int boardId, String title, String content) {
     public void updateBoard(Board board) {
         String sql = "UPDATE board SET title=:title, content=:content WHERE board_id=:boardId";
-//        Board board = new Board();
-//        board.setBoardId(boardId);
-//        board.setTitle(title);
-//        board.setContent(content);
-
         SqlParameterSource params = new BeanPropertySqlParameterSource(board);
         jdbcTemplate.update(sql, params);
     }
 
     @Override
-    public void increaseViewCount(int boardId) {
+    public void increaseViewCount(Long boardId) {
         String sql = "UPDATE board SET view_cnt = view_cnt + 1 WHERE board_id = :boardId";
         jdbcTemplate.update(sql, Map.of("boardId", boardId));
     }
 
     @Override
-    public void deleteBoard(Integer boardId) {
+    public void deleteBoard(Long boardId) {
         String sql = "DELETE FROM board WHERE board_id=:boardId";
         jdbcTemplate.update(sql, Map.of("boardId", boardId));
     }

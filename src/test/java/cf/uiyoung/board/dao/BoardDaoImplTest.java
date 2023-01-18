@@ -19,12 +19,24 @@ class BoardDaoImplTest {
 
     @Test
     void addBoardTest() {
-        Board board = new Board();
-        board.setTitle("title1");
-        board.setContent("content1");
-        board.setUserId(5);
-        boardDao.addBoard(board);
+        for (int i = 0; i <65; i++) {
+            Board board = new Board();
+            board.setTitle("title" + i);
+            board.setContent("content" + i);
+            board.setUserId(5L);
+            boardDao.addBoard(board);
+        }
     }
+
+    @Test
+    void addBoardOneTest() {
+            Board board = new Board();
+            board.setTitle("title1");
+            board.setContent("content1");
+            board.setUserId(5L);
+            boardDao.addBoard(board);
+    }
+
 
     @Test
     void getTotalCountTest(){
@@ -34,8 +46,8 @@ class BoardDaoImplTest {
     }
     @Test
     void getBoardTest() {
-        Board board = boardDao.getBoard(1);
-        assertThat(board.getBoardId()).isEqualTo(1);
+        Board board = boardDao.getBoard(1L);
+        assertThat(board.getBoardId()).isEqualTo(1L);
     }
 
     @Test
@@ -50,7 +62,7 @@ class BoardDaoImplTest {
     @Test
     void updateBoardTest() {
 //        boardDao.updateBoard(3, "testing", "Attention please");
-        Board board = boardDao.getBoard(4);
+        Board board = boardDao.getBoard(4L);
         board.setTitle("hi22");
         board.setContent("22there");
         boardDao.updateBoard(board);
@@ -58,12 +70,12 @@ class BoardDaoImplTest {
 
     @Test
     void increaseViewCountTest() {
-        boardDao.increaseViewCount(39);
-        Board board = boardDao.getBoard(39);
+        boardDao.increaseViewCount(39L);
+        Board board = boardDao.getBoard(39L);
         assertThat(board.getViewCnt()).isEqualTo(1);
     }
     @Test
     void deleteBoard() {
-        boardDao.deleteBoard(1);
+        boardDao.deleteBoard(1L);
     }
 }

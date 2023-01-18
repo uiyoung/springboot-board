@@ -17,11 +17,11 @@ import java.util.Map;
 @Repository
 public class UserDaoImpl implements UserDao{
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final SimpleJdbcInsertOperations inserUser;
+    private final SimpleJdbcInsertOperations insertUser;
 
     public UserDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        this.inserUser = new SimpleJdbcInsert(dataSource)
+        this.insertUser = new SimpleJdbcInsert(dataSource)
                 .withTableName("user")
                 .usingGeneratedKeyColumns("user_id");
     }
@@ -34,14 +34,13 @@ public class UserDaoImpl implements UserDao{
         user.setPassword(password);
         user.setRegdate(LocalDateTime.now());
         SqlParameterSource params = new BeanPropertySqlParameterSource(user);
-        Number userId = inserUser.executeAndReturnKey(params);  // insert 를 실행하고 auto increment 된 user_id를 가져온다.
-        user.setUserId(userId.intValue());
-
+        Number userId = insertUser.executeAndReturnKey(params);  // insert 를 실행하고 auto increment 된 user_id를 가져온다.
+        user.setUserId(userId.longValue());
         return user;
     }
 
     @Override
-    public void mappingUserRole(Integer userId) {
+    public void mappingUserRole(Long userId) {
         String sql = "INSERT INTO user_role values(:userId, 1)";
         jdbcTemplate.update(sql, Map.of("userId", userId));
     }
@@ -51,8 +50,7 @@ public class UserDaoImpl implements UserDao{
         try{
             String sql = "SELECT user_id, email, name, password, regdate from user where email= :email";
             RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(User.class);
-            User user = jdbcTemplate.queryForObject(sql, Map.of("email", email), rowMapper);
-            return user;
+            return jdbcTemplate.queryForObject(sql, Map.of("email", email), rowMapper);
         } catch(Exception e){
             e.printStackTrace();
             return null;
@@ -63,16 +61,12 @@ public class UserDaoImpl implements UserDao{
     public Integer updateUser(User user) {
         String sql = "UPDATE user SET name=:name, password=:password WHERE user_id=:userId";
         SqlParameterSource params = new BeanPropertySqlParameterSource(user);
-        int result = jdbcTemplate.update(sql, params);
-
-        return result;
+        return jdbcTemplate.update(sql, params);
     }
 
     @Override
     public Integer deleteUser(Integer userId) {
         String sql = "DELETE FROM user WHERE user_id=:userId";
-        int result = jdbcTemplate.update(sql, Map.of("userId", userId));
-
-        return result;
+        return jdbcTemplate.update(sql, Map.of("userId", userId));
     }
 }

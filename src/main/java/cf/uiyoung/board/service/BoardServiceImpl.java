@@ -20,13 +20,18 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public Integer getTotalCount() {
+        return boardDao.getTotalCount();
+    }
+
+    @Override
     @Transactional
-    public Board getPost(int boardId) {
+    public Board getPost(Long boardId) {
         return getPost(boardId, true);
     }
 
     @Transactional
-    public Board getPost(int boardId, boolean isIncreaseViewCount) {
+    public Board getPost(Long boardId, boolean isIncreaseViewCount) {
         Board board = boardDao.getBoard(boardId);
         if (isIncreaseViewCount) {
             boardDao.increaseViewCount(boardId);
@@ -48,7 +53,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public void deletePost(int boardId) {
+    public void deletePost(Long boardId) {
         boardDao.deleteBoard(boardId);
     }
 }

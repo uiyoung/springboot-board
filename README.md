@@ -8,7 +8,7 @@
 - Thymeleaf
 
 ### How to Run
-1. write your own application.yml
+1. write your own `./src/main/resources/application.yml`
     ```bash
     $ cd src/main/resources
     $ cp application.example.yml application.yml
@@ -22,15 +22,21 @@
 
 ### Features
 1. CREATE
-   `/board/save`
+   `POST` `/board/save`
 2. READ
-    - 글 목록 : `/board/`
-    - 글 상세보기 : `/board/{id}`
+    - 글 목록 : `GET` `/board/`
+    - 글 상세보기 : `GET` ``/board/{id}`
 3. UPDATE
-   `/board/update/{id}`
+   `PUT` `/board/update/{id}`
 4. DELETE
-   `/board/delete/{id}`
-
+   `DELETE` `/board/delete/{id}`
+5. PAGING
+   `GET` `/board?page={page}`
 
 ### TODO
-- mouseover preview
+- [ ] search
+- [ ] writer : userid -> username
+- [ ] return to same page after edit
+- [ ] pagination size
+- [ ] login
+- [ ] mouseover preview

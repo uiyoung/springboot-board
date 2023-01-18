@@ -7,9 +7,9 @@ import java.util.List;
 public interface BoardDao {
     void addBoard(Board board);
     Integer getTotalCount();
-    Board getBoard(int boardId);
+    Board getBoard(Long boardId);
     List<Board> getBoards(int page);
     void updateBoard(Board board);
-    void increaseViewCount(int boardId);
-    void deleteBoard(Integer boardId);
+    void increaseViewCount(Long boardId);
+    void deleteBoard(Long boardId);
 }
