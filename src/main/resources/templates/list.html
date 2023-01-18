@@ -8,13 +8,16 @@
 
 <div th:if="${totalCount} > 0">
     <table>
+        <thead>
         <tr>
-            <td>id</td>
-            <td>title</td>
-            <td>writer</td>
-            <td>regdate</td>
-            <td>hits</td>
+            <th>id</th>
+            <th>title</th>
+            <th>writer</th>
+            <th>regdate</th>
+            <th>hits</th>
         </tr>
+        </thead>
+        <tbody>
         <tr th:each="board : ${boards}">
             <td th:text="${board.boardId}"></td>
             <td><a th:href="@{|/board/${board.boardId}|(page=${page})}" th:text="${board.title}"></a></td>
@@ -22,6 +25,7 @@
             <td th:text="*{#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${board.viewCnt}"></td>
         </tr>
+        </tbody>
     </table>
 
     <div>
